@@ -1,0 +1,14 @@
+#!/bin/python3
+import boto3
+from pprint import pprint
+
+ec2 = boto3.client('ec2')
+response = ec2.describe_instances(Filters=
+            [{
+              "Name": "tag:Environment",
+              "Values" : ['Staging'],
+             }
+             ])
+for reservation in response["Reservations"]:
+    for instance in reservation["Instances"]:
+        print(instance["InstanceId"])
